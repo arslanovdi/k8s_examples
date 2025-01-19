@@ -2,15 +2,27 @@
 apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
-  name: stateful-todo-istio-gateway
-  namespace: stateful-todo
+  name: gateway
+  namespace: istio-system
 spec:
   selector:
     istio: ingressgateway   # use istio default ingress gateway
   servers:
     - port:
         number: 80
-        name: http
+        name: statedul-todo
         protocol: HTTP
       hosts:
-        - "*"
+        - "stateful-todo.k3s.dev.com"
+    - port:
+        number: 80
+        name: longhorn
+        protocol: HTTP
+      hosts:
+        - "longhorn.k3s.dev.com"
+    - port:
+        number: 80
+        name: kiali
+        protocol: HTTP
+      hosts:
+        - "kiali.k3s.dev.com"

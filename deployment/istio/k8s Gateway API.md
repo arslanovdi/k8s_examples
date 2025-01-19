@@ -3,7 +3,7 @@
 ## [Istio Gateway API](https://istio.io/latest/docs/tasks/traffic-management/ingress/gateway-api/)
 По ссылке хороший мануал по использованию istio gateway api.
 
-Пока Istio Gateway API не дает полного функционала istio api. Но я разницы еще не нашел )) 
+Пока Istio Gateway API не дает полного функционала istio api.
 ### 1. Download the Istio release
 ```bash
 cd
@@ -88,46 +88,3 @@ spec:
 kubectl wait -n istio-ingress --for=condition=programmed gateways.gateway.networking.k8s.io gateway
 export INGRESS_HOST=$(kubectl get gateways.gateway.networking.k8s.io gateway -n istio-ingress -ojsonpath='{.status.addresses[0].value}')
 ```
-
-
-## Объект DestinationRule
-- Настраивает поведение трафика после выполнения роутинга
-- Группирует версии приложения в сабсеты
-- Добавляет mTLS
-
-Можно группировать поды по какому-то `label`, например все поды с версией v3 будут в группе с именем testversion.
-Соответственно с помощью `VirtualService` можно будет навесить на эту группу процент трафика, что-то типа A/B тестов.
-
-Также можно настраивать mTLS - взаимное шифрование трафика между подами.
-
-Пример:
-
-```yaml
-apiVersion: networking.istio.io/v1
-kind: DestinationRule
-metadata:
-  name: demo
-spec:
-  host: "*.foo.com"
-  trafficPolicy:
-    tls:
-      mode: SIMPLE
-  subsets:
-  - name: testversion
-    labels:
-      version: v3
-    trafficPolicy:
-      loadBalancer:
-        simple: ROUND_ROBIN
-```
-
-## Схема прохождения пакетов
-- пакет -> 
-- Внешний loadBalancer -> 
-- порт kubernetes worker нод ->
-- istio ingress gateway service ->
-- istio ingress gateway pod (этот pod настраивается через объекты `Gateway` и `VirtualService`) ->
-  - `Gateway` описывает порты, протоколы с SSL сертификатом и т.д.
-  - `VirtualService` описывает роутинг пакета к нужному kubernetes сервису
-- Service приложения -> 
-- к запросу применяются правила, описанные в `DestinationRule`.

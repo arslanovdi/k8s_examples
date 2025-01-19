@@ -1,8 +1,8 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: gateway
-  namespace: istio-ingress
+  name: gatewayapi
+  namespace: istio-system
 spec:
   gatewayClassName: istio
   listeners:
@@ -13,3 +13,17 @@ spec:
       allowedRoutes:
         namespaces:
           from: All #Same  # Same - в том же namespace; all - во всех namespace; selector - по селектору
+    - name: longhorn
+      hostname: "longhorn.k3s.dev.com"
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: kiali
+      hostname: "kiali.k3s.dev.com"
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All

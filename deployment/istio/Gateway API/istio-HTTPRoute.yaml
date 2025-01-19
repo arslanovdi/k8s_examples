@@ -5,8 +5,8 @@ metadata:
   namespace: stateful-todo
 spec:
   parentRefs:
-    - name: gateway
-      namespace: istio-ingress
+    - name: gatewayapi
+      namespace: istio-system
   hostnames:
     - "stateful-todo.k3s.dev.com"
   rules:

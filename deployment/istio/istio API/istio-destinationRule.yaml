@@ -7,9 +7,9 @@ metadata:
 spec:
   host: stateful-todo
   subsets:
-    - name: v1
+    - name: stable
       labels:
-        version: v1
-    - name: v2
+        version: stable
+    - name: canary
       labels:
-        version: v2
+        version: canary

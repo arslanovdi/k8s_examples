@@ -1,7 +1,7 @@
 # API Istio
 
 В будущем API по умолчанию для управления трафиком будет Kubernetes Gateway API.
-Этот вариант я пока не опробовал, пользуюсь Gateway API.
+
 
 
 ## [ingress2gateway](https://github.com/kubernetes-sigs/ingress2gateway)
@@ -18,7 +18,8 @@ Automatic Conversion of Ingresses
 apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
-  name: istio-gateway
+  name: gateway
+  namespace: stateful-todo
 spec:
   selector:
     istio: ingressgateway   # use istio default ingress gateway
@@ -28,7 +29,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "*"
+        - "stateful-todo.k3s.dev.com"
 ```
 
 `ingress gateway` в кластере может быть несколько, например какие-то за публичным loadbalancerом, а какие-то за приватным.
@@ -49,26 +50,33 @@ spec:
 Пример:
 
 ```yaml
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
-  name: demo
+  name: stateful-todo
+  namespace: stateful-todo
 spec:
   hosts:
-    - "*"           # имена хостов
+    - "stateful-todo.k3s.dev.com"
   gateways:
-    - istio-gateway # имя gateway, с трафиком которого будем работать
-  http:             # роутинг
-    - match:        # все запросы
-      - uri:
-          prefix: /tasks    # с префиксом /tasks
-      - uri:
-          prefix: /users    # и с префиксом /users
-      route:
-      - destination:        # будут направлены
-          host: demo        # в сервис demo, можно указать полное имя с namespace
-          port:
-            number: 8000    # на порт 8000
-
+    - "stateful-todo/gateway"
+  http:
+    - match:
+        - uri:
+            prefix: /tasks
+      route:  # канареечное развертывание
+        - destination:
+            host: stateful-todo   // ClusterIP
+            subset: stable
+            port:
+              number: 5000
+          weight: 90  # 90% трафика
+        - destination:
+            host: stateful-todo
+            subset: canary
+            port:
+              number: 5000
+          weight: 10  # 10% трафика
 ```
 
 ## Объект DestinationRule
@@ -84,6 +92,21 @@ spec:
 Пример:
 
 ```yaml
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: stateful-todo
+  namespace: stateful-todo
+spec:
+  host: stateful-todo
+  subsets:
+    - name: stable
+      labels:
+        version: stable
+    - name: canary
+      labels:
+        version: canary
+---
 apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:

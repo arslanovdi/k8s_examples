@@ -5,11 +5,10 @@ kind: HTTPRoute
 metadata:
   name: stateful-todo-mirroring
   namespace: stateful-todo
-  labels:
-    gateway: stateful-todo-istio-gateway
 spec:
   parentRefs:
-    - name: stateful-todo-istio-gateway
+    - name: gateway
+      namespace: istio-system
   hostnames:
     - "stateful-todo.k3s.dev.com"
   rules:
