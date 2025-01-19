@@ -1,0 +1,26 @@
+# ingress - создает точку доступа к сервису извне, по доменному имени / пути.
+# только http(s)
+# тут пример с nginx-ingress
+# должен быть развернут в одном пространстве имен с сервисом
+
+# В документации kubernetes ingress в статусе FROZEN.
+# Использовать вместо него Gateway API ??
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  namespace: stateful-todo
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: stateful-todo.k3s.dev.com # доступ через внешний IP адресу ingress-nginx controller, обычно это IP адреса узлов кластера. Добавить A запись по каждому узлу.
+      http:
+       paths:
+         - path: /tasks
+           pathType: Prefix
+           backend:
+             service:
+               name: stateful-todo-clusterip-service  # ClusterIP сервиса
+               port:
+                 number: 5000

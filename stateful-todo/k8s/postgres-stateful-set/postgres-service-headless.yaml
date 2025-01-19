@@ -1,0 +1,14 @@
+# проброс порта на каждом поде сервиса
+# так как при масштабировании postgres нужно иметь прямой доступ ко всем экземплярам БД
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: stateful-todo
+spec:
+  clusterIP: None
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      protocol: TCP

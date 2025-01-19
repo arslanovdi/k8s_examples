@@ -1,0 +1,10 @@
+# externalName - для доступа к сервису в другом пространстве имен.
+# namespace: ingress-nginx по дефолту делает доступным извне ??
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateless-todo-service-externalname
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: stateless-todo.stateless-todo.svc.cluster.local

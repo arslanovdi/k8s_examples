@@ -1,0 +1,14 @@
+# Доступ к Сервису извне k8s кластера через балансировщик нагрузки. Подключаться через доменное имя кластера K8s. External IPs - публичные адреса узлов кластера.
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateless-todo-loadbalancer-service
+  namespace: stateless-todo
+spec:
+  type: LoadBalancer
+  selector:
+    app: stateless-todo
+  ports:
+    - port: 5000
+      protocol: TCP
+      targetPort: 5000

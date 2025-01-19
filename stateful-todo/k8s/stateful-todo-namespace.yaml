@@ -1,0 +1,23 @@
+# создание namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: stateful-todo
+
+---
+
+# Лимиты контейнера в namespace stateful-todo, по умолчанию.
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: stateful-todo
+  namespace: stateful-todo
+spec:
+  limits:
+    - defaultRequest:   # запрос по умолчанию
+        memory: "64Mi"
+        cpu: "250m"
+      default:          # лимит по умолчанию
+        memory: "512Mi"
+        cpu: "1000m"
+      type: Container

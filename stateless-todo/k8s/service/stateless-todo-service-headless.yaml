@@ -1,0 +1,14 @@
+# проброс порта на каждом поде сервиса
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateless-todo-headless-service # dns-имя сервиса, которое будет использоваться внутри кластера, по нему резолвятся все поды сервиса
+  namespace: stateless-todo
+spec:
+  clusterIP: None
+  selector:
+    app: stateless-todo
+  ports:
+    - port: 5000
+      protocol: TCP
+      targetPort: 5000

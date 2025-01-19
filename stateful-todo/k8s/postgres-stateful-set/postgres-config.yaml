@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: stateful-todo
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: "stateful-todo-db"
+  POSTGRES_USER: "user"
+  POSTGRES_PASSWORD: "qwerty"

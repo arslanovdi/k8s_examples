@@ -1,0 +1,24 @@
+# Зеркалирование HTTP запросов
+# Может быть ролезно при сине-зеленом деплое
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: stateful-todo-mirroring
+  namespace: stateful-todo
+  labels:
+    gateway: stateful-todo-istio-gateway
+spec:
+  parentRefs:
+    - name: stateful-todo-istio-gateway
+  hostnames:
+    - "stateful-todo.k3s.dev.com"
+  rules:
+    - backendRefs:
+        - name: stateful-todo-v1
+          port: 5000
+      filters:
+        - type: RequestMirror # зеркалируем запросы на stateful-todo-v2
+          requestMirror:
+            backendRef:
+              name: stateful-todo-v2
+              port: 5000

@@ -1,0 +1,19 @@
+# Для включения автоматического вертикального масштабирования нужно включить этот ресурс к каждому деплою.
+# VPA несовместим с HPA, если они базируются на cpu или memory.
+# Одновременное масштабирование по пользовательским метрикам возможно.
+# Для автомасштабирования должно быть хотябы 2 реплики сервиса, чтобы по очереди их пересоздавать.
+# VPA убивает и создает под заново, с новыми лимитами и реквестами.
+
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: stateful-todo-vpa
+  namespace: stateful-todo
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: stateful-todo
+  updatePolicy:
+    updateMode: "Auto"  # Recreate, Initial, Off
+    minReplicas: 2      # default : 2

@@ -1,0 +1,15 @@
+# ClusterIP нужен для настройки ingress
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateless-todo-clusterip
+  namespace: stateless-todo
+spec:
+  type: ClusterIP
+  selector:
+    app: stateless-todo
+  ports:
+    - name: http
+      port: 5000
+      protocol: TCP
+      targetPort: 5000

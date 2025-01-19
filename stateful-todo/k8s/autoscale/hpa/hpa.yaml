@@ -1,0 +1,30 @@
+# Горизонтальное авто-масштабирование.
+# мониторинг загрузки: kubectl get hpa -n stateful-todo -w
+# Нагрузить сервис:
+# kubectl run -i --tty load-generator --rm --namespace=stateful-todo --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- stateful-todo-clusterip-service:5000/tasks; done"
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+    name: stateful-todo-hpa
+    namespace: stateful-todo
+spec:
+    scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: stateful-todo
+    minReplicas: 1
+    maxReplicas: 10
+    metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 10  # %
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 20

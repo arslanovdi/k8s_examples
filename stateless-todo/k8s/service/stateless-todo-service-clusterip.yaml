@@ -1,0 +1,14 @@
+# виртуальный адрес сервиса в кластере
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateless-todo-clusterip-service
+  namespace: stateless-todo
+spec:
+  type: ClusterIP
+  selector:
+    app: stateless-todo
+  ports:
+    - port: 5000
+      protocol: TCP
+      targetPort: 5000

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateful-todo-canary #-clusterip-service
+  namespace: stateful-todo
+spec:
+  type: ClusterIP
+  selector:
+    app: stateful-todo
+    version: canary
+  ports:
+    - name: http
+      port: 5000
+      protocol: TCP
+      targetPort: 5000

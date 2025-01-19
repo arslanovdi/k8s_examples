@@ -1,0 +1,33 @@
+# том удаляется физически, если отменить деплой
+
+apiVersion: v1
+kind: PersistentVolume  # volume
+metadata:
+  name: postgres-pv-volume
+  labels:
+    app: postgres
+spec:
+  storageClassName: longhorn
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/data"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim # запрос на создание volume
+metadata:
+  name: postgres-pv-claim
+  namespace: stateful-todo
+  labels:
+    app: postgres
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn

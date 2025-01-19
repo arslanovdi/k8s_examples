@@ -1,0 +1,23 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: stateful-todo-route
+  namespace: stateful-todo
+spec:
+  parentRefs:
+    - name: gateway
+      namespace: istio-ingress
+  hostnames:
+    - "stateful-todo.k3s.dev.com"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /tasks
+      backendRefs:
+        - name: stateful-todo-stable
+          port: 5000
+          weight: 90
+        - name: stateful-todo-canary
+          port: 5000
+          weight: 90

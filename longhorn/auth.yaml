@@ -1,0 +1,11 @@
+# USER=user; PASSWORD=qwerty; echo "${USER}:$(openssl passwd -stdin -apr1 <<< ${PASSWORD})" >> auth
+# kubectl -n longhorn-system create secret generic basic-auth --from-file=auth
+
+apiVersion: v1
+kind: Secret
+data:
+  auth: dXNlcjokYXByMSR6ZTdlYkNrUSR3L3IyazJTUi82bDlkS2p5RzFNdDcxCg==
+metadata:
+  name: basic-auth
+  namespace: longhorn-system
+type: Opaque
