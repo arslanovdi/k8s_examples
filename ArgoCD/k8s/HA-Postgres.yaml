@@ -1,0 +1,27 @@
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  labels:
+    team: acid  # id команды
+  name: postgres
+  namespace: stateful-todo
+spec:
+  numberOfInstances: 2
+  postgresql:
+    version: '17'
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  teamId: acid
+  users:
+    user: []  # database owner
+  databases:
+    stateful_todo_db: user  # database_name -> owner
+
+  volume:
+    size: 1Gi
+    storageClass: longhorn

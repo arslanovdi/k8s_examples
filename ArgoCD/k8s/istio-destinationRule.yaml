@@ -1,0 +1,15 @@
+# определяем подмножества приложений
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: stateful-todo
+  namespace: stateful-todo
+spec:
+  host: stateful-todo
+  subsets:
+    - name: stable
+      labels:
+        version: stable
+    - name: canary
+      labels:
+        version: canary

@@ -1,0 +1,28 @@
+# virtualservice определяем правила маршрутизации
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: stateful-todo
+  namespace: stateful-todo
+spec:
+  hosts:
+    - "stateful-todo.k3s.dev.com"
+  gateways:
+    - "istio-system/gateway"
+  http:
+    - match:
+        - uri:
+            prefix: /tasks
+      route:  # канареечное развертывание
+        - destination:
+            host: stateful-todo
+            subset: stable
+            port:
+              number: 5000
+          weight: 90  # 90% трафика
+        - destination:
+            host: stateful-todo
+            subset: canary
+            port:
+              number: 5000
+          weight: 10  # 10% трафика

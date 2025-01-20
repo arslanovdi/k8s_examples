@@ -1,0 +1,17 @@
+# virtualservice определяем правила маршрутизации
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  hosts:
+    - "argocd.k3s.dev.com"
+  gateways:
+    - "istio-system/gateway"
+  http:
+    - route:
+        - destination:
+            host: argocd-server.argocd.svc.cluster.local
+            port:
+              number: 80
