@@ -20,7 +20,7 @@ spec:
   users:
     user: []  # database owner
   databases:
-    {{ .Values.postgres.dbName }}: user  # database_name -> owner
+    stateful-todo-db: user  # database_name -> owner
 
   volume:
     size: 1Gi
