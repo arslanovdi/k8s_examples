@@ -9,11 +9,11 @@ spec:
     server: https://192.168.2.50:6443
   project: default
   source:
-    path: ArgoCD/helm/templates
+    path: ArgoCD/helm
     repoURL: https://github.com/arslanovdi/k8s_examples
     targetRevision: master  # HEAD etc
     helm:
-      valuesFiles:
+      valueFiles:
         - values.yaml
   syncPolicy:
     automated:
