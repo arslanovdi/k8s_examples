@@ -2,4 +2,4 @@ replicaCount: 3
 
 image:
     repository: arslanovdi/stateful-todo
-    tag: v0.0.8
+    tag: v0.0.9
