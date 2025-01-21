@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
     repository: arslanovdi/stateful-todo
-    tag: latest
+    tag: v0.0.6
 
 postgres:
     dbName: stateful-todo-db
