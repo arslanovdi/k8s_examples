@@ -9,11 +9,11 @@ spec:
     server: https://192.168.2.50:6443
   project: default
   source:
-    path: ArgoCD/k8s
+    path: ArgoCD/withoutHelm/k8s
     repoURL: https://github.com/arslanovdi/k8s_examples
     targetRevision: master
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
-      allowEmpty: true
+      prune: true       # Не удалять ресурсы при синхронизации
+      selfHeal: true    # Возвращать состояние, если оно было изменено.
+      allowEmpty: true  # Разрешать пустые ресурсы.

@@ -1,3 +1,6 @@
+# [Longhorn](https://longhorn.io/)
+Распределенное хранилище поверх k8s кластера.
+
 ## [Установка через helm](https://longhorn.io/docs/1.7.2/deploy/install/install-with-helm/)
 ```bash
 helm repo add longhorn https://charts.longhorn.io

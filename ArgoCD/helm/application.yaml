@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: stateful-todo
+  namespace: argocd
+spec:
+  destination:
+    namespace: stateful-todo
+    server: https://192.168.2.50:6443
+  project: default
+  source:
+    path: ArgoCD/helm/templates
+    repoURL: https://github.com/arslanovdi/k8s_examples
+    targetRevision: master  # HEAD etc
+    helm:
+      valuesFiles:
+        - values.yaml
+  syncPolicy:
+    automated:
+      prune: true       # Не удалять ресурсы при синхронизации
+      selfHeal: true    # Возвращать состояние, если оно было изменено.
+      allowEmpty: true  # Разрешать пустые ресурсы.

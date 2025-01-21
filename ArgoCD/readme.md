@@ -37,3 +37,30 @@ rm argocd-linux-amd64
 export password=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)
 argocd login http://argocd.k3s.dev.com:80 --username admin --password $password --insecure
 ```
+
+## Создание приложения через манифест
+Манифест нужно развернуть в `argocd`.
+
+Пример:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: stateful-todo
+  namespace: argocd
+spec:
+  destination:
+    namespace: stateful-todo
+    server: https://192.168.2.50:6443
+  project: default
+  source:
+    path: ArgoCD/k8s
+    repoURL: https://github.com/arslanovdi/k8s_examples
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+```
