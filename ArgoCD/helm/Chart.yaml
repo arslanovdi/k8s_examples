@@ -3,4 +3,4 @@ name: stateful-todo-app-helm    # Имя чарта Helm
 description: Чарт Helm Kubernetes для изучения Argo CD    # Описание чарта Helm
 type: application               # Тип чарта (например, приложение, библиотека)
 version: 0.0.6                  # Версия чарта Helm
-appVersion: "0.0.10"             # Версия приложения, развертываемого чартом Helm
+appVersion: "0.0.11"             # Версия приложения, развертываемого чартом Helm
