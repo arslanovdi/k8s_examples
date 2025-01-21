@@ -20,7 +20,7 @@ spec:
   users:
     user: []  # database owner
   databases:
-    stateful-todo-db: user  # database_name -> owner
+    stateful_todo_db: user  # database_name -> owner
 
   volume:
     size: 1Gi

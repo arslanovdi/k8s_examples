@@ -63,4 +63,4 @@ spec:
             - name: DB_PORT
               value: "5432"
             - name: DB_NAME
-              value: "stateful-todo-db"
+              value: "stateful_todo_db"
