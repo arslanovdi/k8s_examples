@@ -9,7 +9,6 @@ on:
 env:
   REGISTRY: arslanovdi
   IMAGE_NAME: stateful-todo
-  TAG: v0.0.7
 
 jobs:
   push_to_registry:
@@ -43,5 +42,5 @@ jobs:
           context: .
           file: ./stateful-todo/Dockerfile
           push: true
-          tags: ${{ env.TAG }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
