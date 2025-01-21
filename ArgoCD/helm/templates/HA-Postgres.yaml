@@ -4,7 +4,7 @@ metadata:
   labels:
     team: acid  # id команды
   name: postgres
-  namespace: {{ .Chart.Name }}
+  namespace: stateful-todo
 spec:
   numberOfInstances: 2
   postgresql:

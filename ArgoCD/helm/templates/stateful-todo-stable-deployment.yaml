@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "stateful-todo.fullname" . }}
-  namespace: {{ .Chart.Name }}
+  namespace: stateful-todo
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:

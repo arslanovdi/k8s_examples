@@ -3,7 +3,7 @@ apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: {{ template "stateful-todo.fullname" . }}
-  namespace: {{ .Chart.Name }}
+  namespace: stateful-todo
 spec:
   hosts:
     - "stateful-todo.k3s.dev.com"

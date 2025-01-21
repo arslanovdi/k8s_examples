@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "stateful-todo.fullname" . }}
-  namespace: {{ .Chart.Name }}
+  namespace: stateful-todo
 spec:
   type: ClusterIP
   selector:
