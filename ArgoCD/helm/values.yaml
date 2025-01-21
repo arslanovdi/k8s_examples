@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-    repository: arslanovdi/stateful-todo:v0.0.6
+    repository: arslanovdi/stateful-todo
     tag: latest
 
 postgres:
