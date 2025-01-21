@@ -1,5 +1,5 @@
-replicaCount: 3
+replicaCount: 5
 
 image:
     repository: arslanovdi/stateful-todo
-    tag: v0.0.9
+    tag: v0.0.10
