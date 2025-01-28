@@ -35,6 +35,16 @@ istioctl install --set profile=minimal -y
 istioctl install
 ```
 
+Конфигурация demo - с istio-egress, если используется Istio API.
+```bash
+istioctl install --set profile=demo
+```
+
+### Uninstall istio
+```bash
+istioctl uninstall --purge
+```
+
 ## Добавление istio-injection sidecar в namespace:
 ```bash
 kubectl label namespace stateful-todo istio-injection=enabled

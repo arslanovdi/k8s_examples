@@ -38,6 +38,13 @@ export password=$(kubectl -n argocd get secret argocd-initial-admin-secret -o js
 argocd login http://argocd.k3s.dev.com:80 --username admin --password $password --insecure
 ```
 
+### Добавление кластера в ArgoCD
+```bash
+kubectl config get-contexts -o name                     // Вывод default
+argocd cluster default
+````
+
+
 ## Создание приложения через манифест
 Манифест нужно развернуть в `argocd`.
 

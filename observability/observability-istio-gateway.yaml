@@ -3,38 +3,33 @@ apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
   name: gateway
-  namespace: istio-system
+  namespace: observability
 spec:
   selector:
     istio: ingressgateway   # use istio default ingress gateway
   servers:
     - port:
         number: 80
-        name: statedul-todo
+        name: jaeger
         protocol: HTTP
       hosts:
-        - "stateful-todo.k3s.dev.com"
+        - "jaeger.k3s.dev.com"
     - port:
         number: 80
-        name: longhorn
+        name: prometheus
         protocol: HTTP
       hosts:
-        - "longhorn.k3s.dev.com"
+        - "prometheus.k3s.dev.com"
     - port:
         number: 80
-        name: kiali
+        name: grafana
         protocol: HTTP
       hosts:
-        - "kiali.k3s.dev.com"
+        - "grafana.k3s.dev.com"
     - port:
         number: 80
-        name: argocd
+        name: graylog
         protocol: HTTP
       hosts:
-        - "argocd.k3s.dev.com"
-    - port:
-        number: 80
-        name: zalando
-        protocol: HTTP
-      hosts:
-        - "zalando.k3s.dev.com"
+        - "graylog.k3s.dev.com"
+
